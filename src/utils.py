@@ -9,8 +9,8 @@ def build_precision_two_complement_fixed_point(
     integer_bits = int(positive_bits * point_position)
     decimal_bits = positive_bits - integer_bits
 
-    return np.array([-2 ** (integer_bits)]
-                    + [2 ** -i for i in reversed(range(1, decimal_bits+1))]
+    return np.array([-2 ** integer_bits]
+                    + [2 ** -i for i in reversed(range(1, decimal_bits + 1))]
                     + [2 ** i for i in range(integer_bits)])
 
 
@@ -26,6 +26,7 @@ def build_augmented_feature_matrix(
 ) -> np.array:
     bias = np.array([np.ones(feature_matrix.shape[0])]).T
     return np.concatenate([bias, feature_matrix], axis=1)
+
 
 def get_weights(
         precision_matrix: np.array,
