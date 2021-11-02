@@ -12,8 +12,8 @@ def build_q_linear_regression(
         fit_intercept: bool = False
 ) -> np.array:
     augmented_feature_matrix = build_augmented_feature_matrix(feature_matrix) if fit_intercept else feature_matrix
-    bias = -2 * precision_matrix.T.dot(augmented_feature_matrix.T).dot(target_matrix)
-    coupler = precision_matrix.T.dot(augmented_feature_matrix.T).dot(augmented_feature_matrix).dot(precision_matrix)
+    bias = -2 * precision_matrix.T @ augmented_feature_matrix.T @ target_matrix
+    coupler = precision_matrix.T @ augmented_feature_matrix.T @ augmented_feature_matrix @ precision_matrix
 
     return coupler + np.diag(bias)
 
