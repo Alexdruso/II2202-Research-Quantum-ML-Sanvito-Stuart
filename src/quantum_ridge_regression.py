@@ -21,9 +21,9 @@ def build_q_ridge_regression(
 
 
 samplers = {
-    'quantum': DWaveSampler(),
-    'hybrid': LeapHybridSampler(),
-    'simulated': dimod.SimulatedAnnealingSampler()
+    'quantum': DWaveSampler,
+    'hybrid': LeapHybridSampler,
+    'simulated': dimod.SimulatedAnnealingSampler
 }
 
 
@@ -35,8 +35,9 @@ class QuantumRidge(Ridge):
             positive: bool = True,
             num_bits: int = 8,
             point_position: float = 0.5,
-            sampler: str = 'quantum'
+            sampler: str = 'simulated'
     ):
+        self.sample_set = None
         self.positive = positive
         self.num_bits = num_bits
         self.point_position = point_position
@@ -65,7 +66,9 @@ class QuantumRidge(Ridge):
 
         array_bqm = dimod.AdjArrayBQM(q_matrix, 'BINARY')
 
-        sample_set = samplers[self.sampler].sample(array_bqm)
+        sample_set = samplers[self.sampler]().sample(array_bqm)
+
+        self.sample_set = sample_set
 
         w_binary = np.asarray(list(sample_set.first.sample.values()))
 
@@ -79,3 +82,7 @@ class QuantumRidge(Ridge):
             self.coef_ = w_approx
 
         return self
+
+
+if __name__ == '__main__':
+    print(QuantumRidge(sampler='simulated').fit(np.asarray([[1], [1]]), np.asarray([1, 1])).coef_)
