@@ -33,7 +33,7 @@ class QuantumRidge(Ridge):
             alpha: float = 1.0,
             fit_intercept: bool = True,
             positive: bool = True,
-            num_bits: int = 8,
+            num_bits: int = 32,
             point_position: float = 0.5,
             sampler: str = 'simulated'
     ):
@@ -61,7 +61,8 @@ class QuantumRidge(Ridge):
             precision_matrix=precision_matrix,
             feature_matrix=X,
             target_matrix=y,
-            fit_intercept=self.fit_intercept
+            fit_intercept=self.fit_intercept,
+            alpha=self.alpha
         )
 
         array_bqm = dimod.AdjArrayBQM(q_matrix, 'BINARY')
@@ -85,4 +86,4 @@ class QuantumRidge(Ridge):
 
 
 if __name__ == '__main__':
-    print(QuantumRidge(sampler='simulated').fit(np.asarray([[1], [1]]), np.asarray([1, 1])).coef_)
+    print(QuantumRidge(sampler='simulated', alpha=0.0).fit(np.asarray([[1], [1]]), np.asarray([1, 1])).coef_)
