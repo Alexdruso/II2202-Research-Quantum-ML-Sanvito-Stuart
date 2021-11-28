@@ -78,6 +78,14 @@ class QuantumRidge(Ridge):
                     sample_set.record
                 )
             )
+        ) if self.sampler in {'quantum, simulated'} else list(
+            map(
+                lambda solution: precision_matrix @ solution,
+                map(
+                    lambda record: record[0],
+                    [samplers[self.sampler]().sample(array_bqm).record[0] for _ in range(10)]
+                )
+            )
         )
 
         w_binary = np.asarray(list(sample_set.first.sample.values()))
