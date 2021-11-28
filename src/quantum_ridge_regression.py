@@ -86,4 +86,9 @@ class QuantumRidge(Ridge):
 
 
 if __name__ == '__main__':
-    print(QuantumRidge(sampler='simulated', alpha=0.0).fit(np.asarray([[1], [1]]), np.asarray([1, 1])).coef_)
+    print(
+        QuantumRidge(sampler='simulated', alpha=0.0, fit_intercept=False).fit(
+            np.asarray([[1], [1]]),
+            np.asarray([1, 1])
+        ).coef_
+    )
