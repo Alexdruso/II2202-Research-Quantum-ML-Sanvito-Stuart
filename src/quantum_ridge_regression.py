@@ -1,6 +1,7 @@
 from sklearn.linear_model import Ridge
 import dimod
 from dwave.system.samplers import LeapHybridSampler, DWaveSampler
+from dimod import sampleset
 
 from utils import *
 
@@ -37,12 +38,12 @@ class QuantumRidge(Ridge):
             point_position: float = 0.5,
             sampler: str = 'simulated'
     ):
-        self.sample_set = None
+        self.sample_set: sampleset = None
         self.positive = positive
         self.num_bits = num_bits
         self.point_position = point_position
         self.sampler = sampler
-        super().__init__(alpha, fit_intercept)
+        super().__init__(alpha=alpha, fit_intercept=fit_intercept)
 
     def fit(self, X, y, sample_weight=None):
         X, y = self._validate_data(
@@ -69,7 +70,15 @@ class QuantumRidge(Ridge):
 
         sample_set = samplers[self.sampler]().sample(array_bqm)
 
-        self.sample_set = sample_set
+        self.sample_set = list(
+            map(
+                lambda solution: precision_matrix @ solution,
+                map(
+                    lambda record: record[0],
+                    sample_set.record
+                )
+            )
+        )
 
         w_binary = np.asarray(list(sample_set.first.sample.values()))
 
