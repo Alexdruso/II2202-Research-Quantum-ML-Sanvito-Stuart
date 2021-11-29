@@ -83,7 +83,7 @@ class QuantumRidge(Ridge):
                 lambda solution: precision_matrix @ solution,
                 map(
                     lambda record: record[0],
-                    [samplers[self.sampler]().sample(array_bqm).record[0] for _ in range(10)]
+                    [samplers[self.sampler]().sample(array_bqm).record[0] for _ in range(3)]
                 )
             )
         )
