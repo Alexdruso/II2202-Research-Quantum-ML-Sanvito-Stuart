@@ -66,7 +66,7 @@ def run_algorithms(
             (np.asarray([closed_form.intercept_]), closed_form.coef_)
         ),
         'quantum': QuantumRidge(
-            sampler='simulated',
+            sampler='hybrid',
             alpha=alpha
         ).fit(X, y).sample_set
     }
