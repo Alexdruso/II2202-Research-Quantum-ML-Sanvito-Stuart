@@ -1,5 +1,6 @@
 from src.experiment_utils import *
 from numpy.random import default_rng
+from scipy.stats import binom_test
 
 datasets = {
     'Iris': pd.read_csv(
@@ -37,7 +38,7 @@ for name, dataset in datasets.items():
             quantum_samples=result['quantum']
         )
 
-        print('The average error is {}%.'.format(np.mean(errors)))
+        print('The average error is {}%.'.format(np.mean(errors)*100))
 
         boolean_sample = test_mean_error(
             errors=errors
@@ -48,4 +49,20 @@ for name, dataset in datasets.items():
         else:
             print('The quantum algorithm sucks here.')
 
-        boolean_samples.append(test_mean_error)
+        boolean_samples.append(boolean_sample)
+
+p_value = binom_test(
+    x=boolean_samples.count(True),
+    n=len(boolean_samples),
+    p=1,
+    alternative='less'
+)
+
+print(boolean_samples.count(True)/len(boolean_samples))
+print(len(boolean_samples))
+
+print(
+    'Overall, the evidence indicates that the quantum algorithm {} the same results of the classical one.'.format(
+        'does not reach' if p_value > 0.05 else 'reaches'
+    )
+)
