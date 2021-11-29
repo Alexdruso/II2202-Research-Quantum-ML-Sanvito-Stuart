@@ -1,7 +1,7 @@
 from itertools import permutations
 from typing import List, Dict, Tuple
 from sklearn.linear_model import Ridge
-from quantum_ridge_regression import QuantumRidge
+from .quantum_ridge_regression import QuantumRidge
 import os
 import pickle
 import numpy as np
@@ -50,7 +50,7 @@ def run_algorithms(
 
     if data_path is not None:
 
-        file_name: str = columns[0] + '_' + columns[1] + '.pickle'
+        file_name: str = columns[0] + '_' + columns[1] + '_' + str(alpha) + '.pickle'
         path = data_path + file_name
 
         if os.path.isfile(path):
@@ -72,7 +72,7 @@ def run_algorithms(
     }
 
     if data_path is not None:
-        file_name: str = columns[0] + '_' + columns[1] + '.pickle'
+        file_name: str = columns[0] + '_' + columns[1] + '_' + str(alpha) + '.pickle'
         path = data_path + file_name
 
         with open(path, 'wb') as fp:

@@ -3,7 +3,7 @@ import dimod
 from dwave.system.samplers import LeapHybridSampler, DWaveSampler
 from dimod import sampleset
 
-from utils import *
+from .utils import *
 
 
 def build_q_ridge_regression(
