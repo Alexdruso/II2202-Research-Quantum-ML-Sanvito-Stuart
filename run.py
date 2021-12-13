@@ -7,7 +7,18 @@ datasets = {
         "https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data",
         names=['sepal-length', 'sepal-width', 'petal-length', 'petal-width', 'class']
     ).drop('class', axis=1),
+    'Boston': pd.read_csv(
+        "https://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data",
+        names=['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX', 'PTRATIO', 'B', 'LSTAT', 'MEDV'],
+        delim_whitespace=True
+    ),
+    'Diabetes': pd.read_csv(
+        "https://www4.stat.ncsu.edu/~boos/var.select/diabetes.tab.txt",
+        delim_whitespace=True
+    )
 }
+
+print(datasets['Diabetes'].head())
 
 boolean_samples = []
 
