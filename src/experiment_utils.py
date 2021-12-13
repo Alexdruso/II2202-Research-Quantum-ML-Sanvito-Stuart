@@ -7,8 +7,7 @@ import os
 import pickle
 import numpy as np
 from numpy.linalg import norm
-from scipy.stats import ttest_1samp
-from scipy.stats import uniform
+from scipy.stats import ttest_1samp, uniform, zscore
 
 import pandas as pd
 
@@ -49,6 +48,9 @@ def run_algorithms(
     :param data_path: the path to where to save the results (if None, no result is saved)
     :return: a dictionary with the name of the columns, the weights of the closed form solution and the samples
     """
+
+    X = zscore(X)
+    y = zscore(y)
 
     if alpha is None:
         alpha = RandomizedSearchCV(
