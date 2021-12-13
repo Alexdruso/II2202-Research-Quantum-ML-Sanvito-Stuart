@@ -16,7 +16,7 @@ def build_q_ridge_regression(
     augmented_feature_matrix = build_augmented_feature_matrix(feature_matrix) if fit_intercept else feature_matrix
     bias = -2 * precision_matrix.T @ augmented_feature_matrix.T @ target_matrix
     coupler = precision_matrix.T @ augmented_feature_matrix.T @ augmented_feature_matrix @ precision_matrix
-    penalization = precision_matrix.T @ np.identity(n=precision_matrix.shape[0]) @ precision_matrix
+    penalization = precision_matrix.T @ precision_matrix
 
     return coupler + np.diag(bias) + alpha * penalization
 
