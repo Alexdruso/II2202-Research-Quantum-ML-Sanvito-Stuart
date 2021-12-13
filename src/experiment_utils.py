@@ -50,6 +50,17 @@ def run_algorithms(
     :return: a dictionary with the name of the columns, the weights of the closed form solution and the samples
     """
 
+    if alpha is None:
+        alpha = RandomizedSearchCV(
+            estimator=Ridge(),
+            param_distributions={
+                'alpha': uniform(loc=0, scale=10)
+            },
+            random_state=1
+        ).fit(X, y).best_params_['alpha']
+
+        print("The best alpha here is {}.".format(alpha))
+
     if data_path is not None:
 
         file_name: str = columns[0] + '_' + columns[1] + '_' + str(alpha) + '.pickle'
@@ -58,18 +69,6 @@ def run_algorithms(
         if os.path.isfile(path):
             with open(path, 'rb') as fp:
                 return pickle.load(fp)
-
-    if alpha is None:
-        alpha = RandomizedSearchCV(
-            estimator=Ridge(),
-            param_distributions={
-                'alpha': uniform(loc=0, scale=10)
-            },
-            scoring='neg_mean_squared_error',
-            cv=5
-        ).fit(X, y).best_params_['alpha']
-
-        print("The best alpha here is {}.".format(alpha))
 
     closed_form = Ridge(alpha=alpha, solver='cholesky')
     closed_form.fit(X, y)
