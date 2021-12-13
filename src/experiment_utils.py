@@ -1,12 +1,14 @@
 from itertools import permutations
 from typing import List, Dict, Tuple
 from sklearn.linear_model import Ridge
+from sklearn.model_selection import RandomizedSearchCV
 from .quantum_ridge_regression import QuantumRidge
 import os
 import pickle
 import numpy as np
 from numpy.linalg import norm
 from scipy.stats import ttest_1samp
+from scipy.stats import uniform
 
 import pandas as pd
 
@@ -33,7 +35,7 @@ def run_algorithms(
         columns: Tuple[str, str],
         X: pd.Series,
         y: pd.Series,
-        alpha: float,
+        alpha: float = None,
         data_path: str = None
 ) -> Dict:
     """
@@ -56,6 +58,18 @@ def run_algorithms(
         if os.path.isfile(path):
             with open(path, 'rb') as fp:
                 return pickle.load(fp)
+
+    if alpha is None:
+        alpha = RandomizedSearchCV(
+            estimator=Ridge(),
+            param_distributions={
+                'alpha': uniform(loc=0, scale=10)
+            },
+            scoring='neg_mean_squared_error',
+            cv=5
+        ).fit(X, y).best_params_['alpha']
+
+        print("The best alpha here is {}.".format(alpha))
 
     closed_form = Ridge(alpha=alpha, solver='cholesky')
     closed_form.fit(X, y)

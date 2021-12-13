@@ -9,8 +9,6 @@ datasets = {
     ).drop('class', axis=1),
 }
 
-rng = default_rng(seed=1)
-
 boolean_samples = []
 
 for name, dataset in datasets.items():
@@ -27,7 +25,6 @@ for name, dataset in datasets.items():
             columns=feature_target['columns'],
             X=feature_target['feature'],
             y=feature_target['target'],
-            alpha=10 * rng.random(),
             data_path='data/'
         )
 
