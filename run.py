@@ -18,8 +18,6 @@ datasets = {
     )
 }
 
-print(datasets['Diabetes'].head())
-
 boolean_samples = []
 
 for name, dataset in datasets.items():
