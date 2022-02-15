@@ -10,7 +10,7 @@ In this paper, we report the results of the empirical analysis of a classical ma
 
 Overall, our work finds that training Ridge regression on a quantum annealer does not yield the same reliable results as on classical hardware.
 
-[Link to an example of implementation of quantum linear regression](https://colab.research.google.com/drive/1fxZ4Izw-3z7z5SrGrYtkswt5v8-fRnzC?usp=sharing)
+[Link to the paper](paper.pdf)
 
 ## How to
 
