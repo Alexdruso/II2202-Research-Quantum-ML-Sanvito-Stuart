@@ -1,5 +1,7 @@
 # Assessing the Robustness of Quantum Ridge Regression on DWave's Quantum Annealers
 
+**Authors**: Alessandro Sanvito, Thuany Stuart
+
 ## Abstract
 
 Machine learning has become the de-facto standard for modeling complex real-world phenomena, with relevant implications across several industries. However, with the increasing complexity of the models, the greater availability of data, and Moore's law decline have put pressure on researchers to find suitable accelerators to support machine learning computations.
