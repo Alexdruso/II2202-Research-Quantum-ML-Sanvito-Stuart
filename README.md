@@ -1,6 +1,6 @@
 # Assessing the Robustness of Quantum Ridge Regression on DWave's Quantum Annealers
 
-**Authors**: Alessandro Sanvito, Thuany Stuart
+**Authors**: Alessandro Sanvito, Thuany K. Stuart
 
 ## Abstract
 
